@@ -1,61 +1,43 @@
-# Breach Checker
+# an3way / The Archive
 
-A command-line tool for checking whether a password or email address has
-appeared in known public data breaches — built with the same k-anonymity
-approach used by [Have I Been Pwned](https://haveibeenpwned.com/), so your
-actual password is never sent over the network.
+Personal site and running record of work in design, cybersecurity, and software. Live at [an3way.github.io](https://an3way.github.io).
 
-## Features
+## About
 
-- **Password check** — tests a password against the Pwned Passwords API
-  using k-anonymity (only a 5-character hash prefix is transmitted) and
-  reports how many times it's shown up in known breaches.
-- **Local strength estimate** — quick, fully offline heuristic feedback on
-  length, character variety, and repetition, shown alongside the breach result.
-- **Email check** — tests an email address against the
-  [XposedOrNot](https://xposedornot.com/) breach database.
-- **Breach directory** — browse the largest publicly known breaches by
-  number of accounts affected.
-- **Breach lookup** — look up full details (date, exposed data types, domain)
-  for a specific named breach.
+Four rooms, one exhibit. The site is built around a simple idea: showcase work the way a small museum would, each project or area held under glass rather than dropped into a generic project grid.
 
-## Privacy
+- **Design Lab**: interface and visual design work
+- **Security Vault**: offensive security, privacy engineering, systems thinking
+- **AI Studio**: local and hosted model experiments
+- **Build Archive**: software projects and prototypes
 
-Nothing you enter is written to disk, logged, or sent anywhere except the
-official API endpoints listed below. Password input is hidden at the
-terminal (via `getpass`) and is never stored, even temporarily.
+Selected work is currently [Breach Checker](https://github.com/an3way/breachchecker), a k-anonymity password-breach lookup tool. That section pulls live stars, language, and last-updated data from the GitHub API on page load.
 
-## APIs used
+## Stack
 
-| Purpose            | Provider      | Endpoint                                   |
-|--------------------|---------------|---------------------------------------------|
-| Password check     | Have I Been Pwned | `api.pwnedpasswords.com/range/{prefix}` |
-| Email check        | XposedOrNot   | `api.xposedornot.com/v1/check-email/{email}` |
-| Breach directory    | Have I Been Pwned | `haveibeenpwned.com/api/v3/breaches`   |
-| Breach lookup       | Have I Been Pwned | `haveibeenpwned.com/api/v3/breach/{name}` |
+No frameworks, no build step. Three files:
 
-All are free, public endpoints that don't require an API key.
-
-## Getting started
-
-```bash
-git clone https://github.com/<your-username>/breach-checker.git
-cd breach-checker
-pip install -r requirements.txt
-python breach_checker.py
+```
+index.html   structure
+style.css    design system (custom properties for color, type, motion)
+script.js    scroll reveals, nav, ambient canvas, live repo stats
 ```
 
-## Requirements
+## Running locally
 
-- Python 3.10+ (uses `X | Y` union syntax in type hints)
-- `requests`
+```bash
+git clone https://github.com/an3way/an3way.github.io.git
+cd an3way.github.io
+python -m http.server 8000
+```
 
-## Disclaimer
+Then open `http://localhost:8000`. A local server (rather than opening `index.html` directly) is needed so the live GitHub stats fetch isn't blocked by the browser's file:// CORS restrictions.
 
-This is a personal/portfolio project for educational and defensive-security
-purposes — checking your own credentials against known breach data. It is
-not affiliated with Have I Been Pwned or XposedOrNot.
+## Notes
+
+- Respects `prefers-reduced-motion` throughout: reveals, petals, and cursor glow all degrade to static states.
+- Fully usable without hover: pointer-tilt and spotlight effects on the exhibit cards are enhancement only, not a requirement to read or navigate.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+No license granted. Feel free to use this as a reference for your own build, but please don't republish it as your own work.
